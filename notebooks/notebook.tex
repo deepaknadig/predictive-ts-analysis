@@ -329,45 +329,97 @@ we get the kernel density plot and the ACF plot with 95\% and 99\%
 confidence intervals.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Commonly used methods}
-        
-        \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
-            \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
-                \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
-            \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
-                \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
-                
-                \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
-                \PY{c+c1}{\PYZsh{} Plot the Time Series}
-                \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{colspan}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
-                \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time Series Analysis Plots}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-                \PY{n}{y}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax1}\PY{p}{)}
-                
-                \PY{c+c1}{\PYZsh{} Plot the Correlogram (ACF)}
-                \PY{n}{ax2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-                \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}acf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax2}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
-                
-                \PY{c+c1}{\PYZsh{} Plot the Correlogram (PACF)}
-                \PY{n}{ax3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-                \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}pacf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax3}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
-                        
-                \PY{c+c1}{\PYZsh{} QQ Plot}
-                \PY{n}{ax3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-                \PY{n}{sm}\PY{o}{.}\PY{n}{qqplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{line}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax3}\PY{p}{)}
-                \PY{n}{ax3}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QQ Plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-                
-                \PY{c+c1}{\PYZsh{} Probability Plot}
-                \PY{n}{ax4} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-                \PY{n}{scs}\PY{o}{.}\PY{n}{probplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{sparams}\PY{o}{=}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{n}{ax4}\PY{p}{)}
-                
-                \PY{c+c1}{\PYZsh{} Distribution Histogram}
-                \PY{n}{ax5} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-                \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax5}\PY{p}{)}
-                
-                \PY{c+c1}{\PYZsh{} ACF line plot with CIs}
-                \PY{n}{ax6} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-                \PY{n}{acfplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax6}\PY{p}{)}
-                \PY{n}{ax6}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ACF Plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}121}]:} \PY{c+c1}{\PYZsh{} Commonly used methods}
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/file.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+              \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{)}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} Plot the Time Series}
+                  \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{colspan}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                  \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time Series Analysis Plots}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  \PY{n}{y}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax1}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} Plot the Correlogram (ACF)}
+                  \PY{n}{ax2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}acf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax2}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} Plot the Correlogram (PACF)}
+                  \PY{n}{ax3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}pacf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax3}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
+                          
+                  \PY{c+c1}{\PYZsh{} QQ Plot}
+                  \PY{n}{ax3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{sm}\PY{o}{.}\PY{n}{qqplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{line}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax3}\PY{p}{)}
+                  \PY{n}{ax3}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QQ Plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} Probability Plot}
+                  \PY{n}{ax4} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{scs}\PY{o}{.}\PY{n}{probplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{sparams}\PY{o}{=}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{n}{ax4}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} Distribution Histogram}
+                  \PY{n}{ax5} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax5}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} ACF line plot with CIs}
+                  \PY{n}{ax6} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{acfplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax6}\PY{p}{)}
+                  \PY{n}{ax6}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ACF Plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs\PYZus{}resids1}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/resids.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+              \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}        
+                  \PY{c+c1}{\PYZsh{} Plot the Correlogram (ACF)}
+                  \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}acf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax1}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} Plot the Correlogram (PACF)}
+                  \PY{n}{ax2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{smt}\PY{o}{.}\PY{n}{graphics}\PY{o}{.}\PY{n}{plot\PYZus{}pacf}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax2}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{lags}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs\PYZus{}resids2}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/resids.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+              \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} QQ Plot}
+                  \PY{n}{ax3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{rowspan}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                  \PY{n}{sm}\PY{o}{.}\PY{n}{qqplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{line}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax3}\PY{p}{)}
+                  \PY{n}{ax3}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QQ Plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs\PYZus{}resids3}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/resids.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+              \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} Probability Plot}
+                  \PY{n}{ax4} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{rowspan}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                  \PY{n}{scs}\PY{o}{.}\PY{n}{probplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{sparams}\PY{o}{=}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{plot}\PY{o}{=}\PY{n}{ax4}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}acfs\PYZus{}resids4}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/resids.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+              \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{n}{style}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{layout} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                  
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} Distribution Histogram}
+                  \PY{n}{ax5} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot2grid}\PY{p}{(}\PY{n}{layout}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{rowspan}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                  \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax5}\PY{p}{)}
+                  
 \end{Verbatim}
 
 
@@ -473,8 +525,11 @@ p-val of the dataset (GridFTP, hourly, 6+ Months): 1.7386532913100715e-07
 (8-Days)}\label{short-gridftp-dataset-8-days}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{data\PYZus{}decomposed\PYZus{}additive} \PY{o}{=} \PY{n}{smt}\PY{o}{.}\PY{n}{seasonal\PYZus{}decompose}\PY{p}{(}\PY{n}{cmsprodSeries}\PY{p}{,} \PY{n}{model}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{additive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{freq}\PY{o}{=}\PY{l+m+mi}{24}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{data\PYZus{}decomposed\PYZus{}additive} \PY{o}{=} \PY{n}{smt}\PY{o}{.}\PY{n}{seasonal\PYZus{}decompose}\PY{p}{(}\PY{n}{cmsprodSeries}\PY{p}{,} \PY{n}{model}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{additive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{freq}\PY{o}{=}\PY{l+m+mi}{12}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{dc\PYZus{}plot\PYZus{}add} \PY{o}{=} \PY{n}{data\PYZus{}decomposed\PYZus{}additive}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/ts\PYZus{}decomp\PYZus{}short.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -495,7 +550,9 @@ p-val of the dataset (GridFTP, hourly, 6+ Months): 1.7386532913100715e-07
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{bp} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{cmsprodSeries}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{bp} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{cmsprodSeries}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/box\PYZus{}short.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -509,7 +566,9 @@ months)}\label{long-gridftp-dataset-6-months}
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}12}]:} \PY{n}{long\PYZus{}data\PYZus{}decomposed\PYZus{}additive} \PY{o}{=} \PY{n}{smt}\PY{o}{.}\PY{n}{seasonal\PYZus{}decompose}\PY{p}{(}\PY{n}{cmsprodSeries\PYZus{}long}\PY{p}{,} \PY{n}{model}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{additive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{freq}\PY{o}{=}\PY{l+m+mi}{720}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{long\PYZus{}dc\PYZus{}plot\PYZus{}add} \PY{o}{=} \PY{n}{long\PYZus{}data\PYZus{}decomposed\PYZus{}additive}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/ts\PYZus{}decomp\PYZus{}long.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -519,7 +578,9 @@ months)}\label{long-gridftp-dataset-6-months}
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{bp\PYZus{}long} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{cmsprodSeries\PYZus{}long}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{bp\PYZus{}long} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{cmsprodSeries\PYZus{}long}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/tmp/box\PYZus{}long.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -602,8 +663,8 @@ Series}\label{fitting-maq-for-the-gridftp-series}
 Dep. Variable:                CMSProd   No. Observations:                  192
 Model:                     ARMA(0, 3)   Log Likelihood               -1724.971
 Method:                           mle   S.D. of innovations           1919.778
-Date:                Mon, 16 Apr 2018   AIC                           3457.942
-Time:                        09:06:17   BIC                           3470.972
+Date:                Sun, 17 Jun 2018   AIC                           3457.942
+Time:                        16:31:54   BIC                           3470.972
 Sample:                    03-09-2017   HQIC                          3463.220
                          - 03-17-2017                                         
 =================================================================================
@@ -624,7 +685,7 @@ MA.3           -0.1466           +1.1507j            1.1600            0.2702
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{mdl}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{mdl}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -637,14 +698,14 @@ MA.3           -0.1466           +1.1507j            1.1600            0.2702
 Series}\label{armap-q-model-fit-for-gridftp-series}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} pick best order by aic }
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} pick best order by aic }
          \PY{c+c1}{\PYZsh{} smallest aic value wins}
          \PY{n}{max\PYZus{}lag} \PY{o}{=} \PY{l+m+mi}{30}
          \PY{n}{best\PYZus{}aic} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf} 
          \PY{n}{best\PYZus{}order} \PY{o}{=} \PY{k+kc}{None}
          \PY{n}{best\PYZus{}mdl} \PY{o}{=} \PY{k+kc}{None}
          
-         \PY{n}{rng} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{n}{rng} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}
          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{rng}\PY{p}{:}
              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n}{rng}\PY{p}{:}
                  \PY{k}{try}\PY{p}{:}
@@ -666,7 +727,7 @@ AIC: 3305.68098 | Best Order: (4, 3)
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}21}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{best\PYZus{}mdl}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{best\PYZus{}mdl}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -676,8 +737,8 @@ AIC: 3305.68098 | Best Order: (4, 3)
 Dep. Variable:                CMSProd   No. Observations:                  192
 Model:                     ARMA(4, 3)   Log Likelihood               -1644.840
 Method:                           mle   S.D. of innovations           1257.610
-Date:                Mon, 16 Apr 2018   AIC                           3305.681
-Time:                        09:06:29   BIC                           3331.741
+Date:                Sun, 17 Jun 2018   AIC                           3305.681
+Time:                        16:33:06   BIC                           3331.741
 Sample:                    03-09-2017   HQIC                          3316.235
                          - 03-17-2017                                         
 =================================================================================
@@ -706,7 +767,7 @@ MA.3           -0.7416           +0.7295j            1.0402            0.3763
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{best\PYZus{}mdl}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{best\PYZus{}mdl}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -722,15 +783,15 @@ q)}\label{autoregressive-integrated-moving-average-models---arimap-d-q}
 Series}\label{arimap-q-model-fit-for-gridftp-series}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{} Fit ARIMA(p, d, q) model to the GridFTP series}
+{\color{incolor}In [{\color{incolor}25}]:} \PY{c+c1}{\PYZsh{} Fit ARIMA(p, d, q) model to the GridFTP series}
          \PY{c+c1}{\PYZsh{} pick best order and final model based on aic}
          \PY{n}{max\PYZus{}lag} \PY{o}{=} \PY{l+m+mi}{30}
          
-         \PY{n}{best\PYZus{}aic} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf} 
-         \PY{n}{best\PYZus{}order} \PY{o}{=} \PY{k+kc}{None}
-         \PY{n}{best\PYZus{}mdl} \PY{o}{=} \PY{k+kc}{None}
+         \PY{n}{best\PYZus{}aic\PYZus{}arima} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf} 
+         \PY{n}{best\PYZus{}order\PYZus{}arima} \PY{o}{=} \PY{k+kc}{None}
+         \PY{n}{best\PYZus{}mdl\PYZus{}arima} \PY{o}{=} \PY{k+kc}{None}
          
-         \PY{n}{pq\PYZus{}rng} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0,1,2,3,4]}
+         \PY{n}{pq\PYZus{}rng} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0,1,2,3,4]}
          \PY{n}{d\PYZus{}rng} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0,1]}
          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{pq\PYZus{}rng}\PY{p}{:}
              \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{d\PYZus{}rng}\PY{p}{:}
@@ -738,7 +799,7 @@ Series}\label{arimap-q-model-fit-for-gridftp-series}
                      \PY{k}{try}\PY{p}{:}
                          \PY{n}{tmp\PYZus{}mdl} \PY{o}{=} \PY{n}{smt}\PY{o}{.}\PY{n}{ARIMA}\PY{p}{(}\PY{n}{cmsprodSeries}\PY{p}{,} \PY{n}{order}\PY{o}{=}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{d}\PY{p}{,}\PY{n}{j}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mle}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{trend}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
                          \PY{n}{tmp\PYZus{}aic} \PY{o}{=} \PY{n}{tmp\PYZus{}mdl}\PY{o}{.}\PY{n}{aic}
-                         \PY{k}{if} \PY{n}{tmp\PYZus{}aic} \PY{o}{\PYZlt{}} \PY{n}{best\PYZus{}aic}\PY{p}{:}
+                         \PY{k}{if} \PY{n}{tmp\PYZus{}aic} \PY{o}{\PYZlt{}} \PY{n}{best\PYZus{}aic\PYZus{}arima}\PY{p}{:}
                              \PY{n}{best\PYZus{}aic\PYZus{}arima} \PY{o}{=} \PY{n}{tmp\PYZus{}aic}
                              \PY{n}{best\PYZus{}order\PYZus{}arima} \PY{o}{=} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{d}\PY{p}{,} \PY{n}{j}\PY{p}{)}
                              \PY{n}{best\PYZus{}mdl\PYZus{}arima} \PY{o}{=} \PY{n}{tmp\PYZus{}mdl}
@@ -750,12 +811,12 @@ Series}\label{arimap-q-model-fit-for-gridftp-series}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-AIC: 3294.01583 | Order: (4, 1, 4)
+AIC: 3281.80302 | Order: (5, 1, 5)
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}24}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -763,41 +824,45 @@ AIC: 3294.01583 | Order: (4, 1, 4)
                              ARIMA Model Results                              
 ==============================================================================
 Dep. Variable:              D.CMSProd   No. Observations:                  191
-Model:                 ARIMA(4, 1, 4)   Log Likelihood               -1638.008
-Method:                           mle   S.D. of innovations           1278.624
-Date:                Mon, 16 Apr 2018   AIC                           3294.016
-Time:                        09:06:48   BIC                           3323.286
-Sample:                    03-09-2017   HQIC                          3305.872
+Model:                 ARIMA(5, 1, 5)   Log Likelihood               -1629.902
+Method:                           mle   S.D. of innovations           1215.041
+Date:                Sun, 17 Jun 2018   AIC                           3281.803
+Time:                        16:40:19   BIC                           3317.578
+Sample:                    03-09-2017   HQIC                          3296.294
                          - 03-17-2017                                         
 ===================================================================================
                       coef    std err          z      P>|z|      [0.025      0.975]
 -----------------------------------------------------------------------------------
-ar.L1.D.CMSProd    -0.2151        nan        nan        nan         nan         nan
-ar.L2.D.CMSProd    -0.4320        nan        nan        nan         nan         nan
-ar.L3.D.CMSProd     0.0611        nan        nan        nan         nan         nan
-ar.L4.D.CMSProd     0.3680        nan        nan        nan         nan         nan
-ma.L1.D.CMSProd    -0.1364        nan        nan        nan         nan         nan
-ma.L2.D.CMSProd     0.2652        nan        nan        nan         nan         nan
-ma.L3.D.CMSProd    -0.4060        nan        nan        nan         nan         nan
-ma.L4.D.CMSProd    -0.5649        nan        nan        nan         nan         nan
+ar.L1.D.CMSProd     0.2381        nan        nan        nan         nan         nan
+ar.L2.D.CMSProd    -0.0889        nan        nan        nan         nan         nan
+ar.L3.D.CMSProd     0.0120        nan        nan        nan         nan         nan
+ar.L4.D.CMSProd    -0.6027      0.047    -12.887      0.000      -0.694      -0.511
+ar.L5.D.CMSProd     0.6402        nan        nan        nan         nan         nan
+ma.L1.D.CMSProd    -0.6515      0.033    -19.911      0.000      -0.716      -0.587
+ma.L2.D.CMSProd     0.0859        nan        nan        nan         nan         nan
+ma.L3.D.CMSProd    -0.0384        nan        nan        nan         nan         nan
+ma.L4.D.CMSProd     0.5725        nan        nan        nan         nan         nan
+ma.L5.D.CMSProd    -0.9089        nan        nan        nan         nan         nan
                                     Roots                                    
 =============================================================================
                  Real           Imaginary           Modulus         Frequency
 -----------------------------------------------------------------------------
-AR.1           -0.1113           -1.0745j            1.0803           -0.2664
-AR.2           -0.1113           +1.0745j            1.0803            0.2664
-AR.3           -1.4978           -0.0000j            1.4978           -0.5000
-AR.4            1.5545           -0.0000j            1.5545           -0.0000
-MA.1            1.0479           -0.0000j            1.0479           -0.0000
-MA.2           -0.0976           -1.0322j            1.0368           -0.2650
-MA.3           -0.0976           +1.0322j            1.0368            0.2650
-MA.4           -1.5714           -0.0000j            1.5714           -0.5000
+AR.1           -0.7424           -0.6832j            1.0090           -0.3816
+AR.2           -0.7424           +0.6832j            1.0090            0.3816
+AR.3            0.5443           -0.9224j            1.0711           -0.1652
+AR.4            0.5443           +0.9224j            1.0711            0.1652
+AR.5            1.3376           -0.0000j            1.3376           -0.0000
+MA.1           -0.7447           -0.7097j            1.0287           -0.3788
+MA.2           -0.7447           +0.7097j            1.0287            0.3788
+MA.3            0.5496           -0.8468j            1.0095           -0.1584
+MA.4            0.5496           +0.8468j            1.0095            0.1584
+MA.5            1.0201           -0.0000j            1.0201           -0.0000
 -----------------------------------------------------------------------------
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{plot\PYZus{}acfs}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{plot\PYZus{}acfs\PYZus{}resids}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -810,7 +875,7 @@ MA.4           -1.5714           -0.0000j            1.5714           -0.5000
 ARIMA(p,d,q)}\label{forecast-the-gridftp-series-using-arimapdq}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} Create a 10 hour forecast of GridFTP CMSProd connections with 95\PYZpc{}, 99\PYZpc{} CIs}
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{} Create a 10 hour forecast of GridFTP CMSProd connections with 95\PYZpc{}, 99\PYZpc{} CIs}
          \PY{n}{n\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{10}
          
          \PY{n}{f}\PY{p}{,} \PY{n}{err95}\PY{p}{,} \PY{n}{ci95} \PY{o}{=} \PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{forecast}\PY{p}{(}\PY{n}{steps}\PY{o}{=}\PY{n}{n\PYZus{}steps}\PY{p}{)} \PY{c+c1}{\PYZsh{} 95\PYZpc{} CI}
@@ -818,9 +883,9 @@ ARIMA(p,d,q)}\label{forecast-the-gridftp-series-using-arimapdq}
          
          \PY{n}{idx} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{date\PYZus{}range}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{periods}\PY{o}{=}\PY{n}{n\PYZus{}steps}\PY{p}{,} \PY{n}{freq}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{H}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{fc\PYZus{}95} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{[}\PY{n}{f}\PY{p}{,} \PY{n}{ci95}\PY{p}{]}\PY{p}{)}\PY{p}{,} 
-                              \PY{n}{index}\PY{o}{=}\PY{n}{idx}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forecast}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower\PYZus{}ci\PYZus{}95}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper\PYZus{}ci\PYZus{}95}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                              \PY{n}{index}\PY{o}{=}\PY{n}{idx}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Forecast}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 95}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (lower)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 95}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (upper)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
          \PY{n}{fc\PYZus{}99} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{column\PYZus{}stack}\PY{p}{(}\PY{p}{[}\PY{n}{ci99}\PY{p}{]}\PY{p}{)}\PY{p}{,} 
-                              \PY{n}{index}\PY{o}{=}\PY{n}{idx}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower\PYZus{}ci\PYZus{}99}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper\PYZus{}ci\PYZus{}99}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                              \PY{n}{index}\PY{o}{=}\PY{n}{idx}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 99}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (lower)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 99}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (upper)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
          \PY{n}{fc\PYZus{}all} \PY{o}{=} \PY{n}{fc\PYZus{}95}\PY{o}{.}\PY{n}{combine\PYZus{}first}\PY{p}{(}\PY{n}{fc\PYZus{}99}\PY{p}{)}
          \PY{c+c1}{\PYZsh{} fc\PYZus{}all.index = fc\PYZus{}all.index.map(lambda t: t.strftime(\PYZsq{}\PYZpc{}Y\PYZhy{}\PYZpc{}m\PYZhy{}\PYZpc{}d \PYZpc{}H:\PYZpc{}M\PYZsq{}))}
          \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{index}\PY{o}{.}\PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Timeline}\PY{l+s+s1}{\PYZsq{}}
@@ -829,26 +894,26 @@ ARIMA(p,d,q)}\label{forecast-the-gridftp-series-using-arimapdq}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}26}]:}                         forecast  lower\_ci\_95  lower\_ci\_99  upper\_ci\_95  \textbackslash{}
-         Timeline                                                                  
-         2017-03-17 10:00:00  4699.624890  2193.567729  1406.107498  7205.682051   
-         2017-03-17 11:00:00  4862.545986  1875.668527   937.123608  7849.423444   
-         2017-03-17 12:00:00  4973.149494  1675.861879   639.779019  8270.437109   
-         2017-03-17 13:00:00  4852.700980  1417.926262   338.641824  8287.475697   
-         2017-03-17 14:00:00  4857.207590  1369.218375   273.212730  8345.196806   
+{\color{outcolor}Out[{\color{outcolor}34}]:}                      CI 95\% (lower)  CI 95\% (upper)  CI 99\% (lower)  \textbackslash{}
+         Timeline                                                              
+         2017-03-17 10:00:00     2470.297751     7233.170345     1721.996233   
+         2017-03-17 11:00:00     1845.156463     7366.861449      977.633736   
+         2017-03-17 12:00:00     1244.990534     7230.638839      304.577029   
+         2017-03-17 13:00:00     1076.796268     7469.547485       72.422260   
+         2017-03-17 14:00:00     1145.731412     7876.097923       88.314196   
          
-                              upper\_ci\_99  
-         Timeline                          
-         2017-03-17 10:00:00  7993.142282  
-         2017-03-17 11:00:00  8787.968363  
-         2017-03-17 12:00:00  9306.519968  
-         2017-03-17 13:00:00  9366.760135  
-         2017-03-17 14:00:00  9441.202451  
+                              CI 99\% (upper)     Forecast  
+         Timeline                                          
+         2017-03-17 10:00:00     7981.471863  4851.734048  
+         2017-03-17 11:00:00     8234.384177  4606.008956  
+         2017-03-17 12:00:00     8171.052344  4237.814686  
+         2017-03-17 13:00:00     8473.921494  4273.171877  
+         2017-03-17 14:00:00     8933.515138  4510.914667  
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} Prediction Error (Actual is 4333)}
-         \PY{n}{predicted} \PY{o}{=} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forecast}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}44}]:} \PY{c+c1}{\PYZsh{} Prediction Error (Actual is 4333)}
+         \PY{n}{predicted} \PY{o}{=} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Forecast}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
          \PY{n+nb}{print}\PY{p}{(}\PY{n}{predicted}\PY{p}{)}
          \PY{n}{actual} \PY{o}{=} \PY{l+m+mi}{4333}
          \PY{n}{error\PYZus{}percent} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{predicted} \PY{o}{\PYZhy{}} \PY{n}{actual}\PY{p}{)}\PY{o}{/}\PY{n}{actual}\PY{o}{*}\PY{l+m+mf}{100.0}
@@ -857,38 +922,79 @@ ARIMA(p,d,q)}\label{forecast-the-gridftp-series-using-arimapdq}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-4862.545985664264
-Absolute Percentage Error (APE): 12.221232071642367\%
+4606.0089564158825
+Absolute Percentage Error (APE): 6.3006913550861405\%
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
-         \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
-         
-         \PY{c+c1}{\PYZsh{} ts = best\PYZus{}mdl.resid.iloc[\PYZhy{}500:].copy()}
-         \PY{n}{ts} \PY{o}{=} \PY{n}{cmsprodSeries}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
-         \PY{n}{ts}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GridFTP CMSProd Connections}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{c+c1}{\PYZsh{} in sample prediction}
-         \PY{n}{pred} \PY{o}{=} \PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{ts}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{ts}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-         \PY{n}{pred}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{In\PYZhy{}sample prediction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{n}{styles} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.75}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.75}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-         \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{n}{styles}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{lower\PYZus{}ci\PYZus{}95}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{upper\PYZus{}ci\PYZus{}95}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{lower\PYZus{}ci\PYZus{}99}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{upper\PYZus{}ci\PYZus{}99}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ minute GridFTP CMSProd Forecast}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{ARIMA}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n\PYZus{}steps}\PY{p}{,} \PY{n}{best\PYZus{}order}\PY{p}{)}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}116}]:} \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+          \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{autoscale}\PY{p}{(}\PY{n}{enable}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{tight}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} ts = best\PYZus{}mdl.resid.iloc[\PYZhy{}500:].copy()}
+          \PY{n}{ts} \PY{o}{=} \PY{n}{cmsprodSeries}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+          \PY{n}{ts}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observed Connections}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} in sample prediction}
+          \PY{c+c1}{\PYZsh{}pred = best\PYZus{}mdl\PYZus{}arima.predict(ts.index[0], ts.index[\PYZhy{}1])}
+          \PY{c+c1}{\PYZsh{}pred.plot(ax=ax, style=\PYZsq{}r\PYZhy{}\PYZsq{}, label=\PYZsq{}In\PYZhy{}sample prediction\PYZsq{})}
+          
+          \PY{n}{styles} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g\PYZhy{}.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g\PYZhy{}.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{style}\PY{o}{=}\PY{n}{styles}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 95}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (lower)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 95}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (upper)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{fc\PYZus{}all}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 99}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (lower)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{fc\PYZus{}all}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CI 99}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ (upper)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} plt.title(\PYZsq{}\PYZob{}\PYZcb{} minute GridFTP CMSProd Forecast\PYZbs{}nARIMA\PYZob{}\PYZcb{}\PYZsq{}.format(n\PYZus{}steps, best\PYZus{}order))}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{,} \PY{n}{ncol}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}28}]:} <matplotlib.legend.Legend at 0x7fa2f8a9f5f8>
+{\color{outcolor}Out[{\color{outcolor}116}]:} <matplotlib.legend.Legend at 0x7f02749da208>
 \end{Verbatim}
             
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{n}{plot\PYZus{}acfs\PYZus{}resids1}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_42_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}123}]:} \PY{n}{plot\PYZus{}acfs\PYZus{}resids2}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_43_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}124}]:} \PY{n}{plot\PYZus{}acfs\PYZus{}resids3}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_44_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}125}]:} \PY{n}{plot\PYZus{}acfs\PYZus{}resids4}\PY{p}{(}\PY{n}{best\PYZus{}mdl\PYZus{}arima}\PY{o}{.}\PY{n}{resid}\PY{p}{,} \PY{n}{lags}\PY{o}{=}\PY{n}{max\PYZus{}lag}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_45_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
